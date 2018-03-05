@@ -1,6 +1,6 @@
 //preguntas
 const fs = require("fs");
-const DB_FILENAME = "quizes.json"
+const DB_FILENAME = "quizzes.json"
 
 let quizes = [
 {
@@ -35,7 +35,7 @@ const load = () =>{
   	let json = JSON.parse(data);
 
   	if(json){
-  		quizes = json;
+  		quizzes = json;
   	}
 	});
 };
@@ -43,7 +43,7 @@ const load = () =>{
 //guardar
 const save = () =>{
 
-	fs.writeFile(DB_FILENAME, JSON.stringify(quizes),
+	fs.writeFile(DB_FILENAME, JSON.stringify(quizzes),
 		err => {
 			if (err) throw err;
 		});
@@ -53,12 +53,12 @@ const save = () =>{
 
 
 //contar elemntos
-exports.count = () => quizes.length;
+exports.count = () => quizzes.length;
 
 //añadir
 exports.add = (question, answer) =>{
 
-	quizes.push({
+	quizzes.push({
 		question: (question || "").trim(),
 		answer: (answer || "").trim()
 
@@ -68,22 +68,22 @@ exports.add = (question, answer) =>{
 
 exports.update = (id, question, answer) => {
 
-	const quiz = quizes[id];
+	const quiz = quizzes[id];
 	if (typeof quiz === "undefined"){
 		throw new Error(`El valor de id no es valido,`);
 	}
-	quizes.splice(id, 1 ,{
+	quizzes.splice(id, 1 ,{
 		question: (question || "").trim(),
 		answer: (answer || "").trim()
 	});
 	save();
 };
 //devuelve todos los quizes
-exports.getAll = () => JSON.parse(JSON.stringify(quizes));
+exports.getAll = () => JSON.parse(JSON.stringify(quizzes));
 
 //dame el quiz de id que se ponga como parametro
 exports.getByIndex = id => {
-	const quiz = quizes[id];
+	const quiz = quizzes[id];
 	if (typeof quiz === "undefined"){
 		throw new Error(`El valor del parametro id no es valido,`);
 	}
@@ -92,11 +92,11 @@ exports.getByIndex = id => {
 
 //Borrar el quiz de id seleccionado
 exports.delete = id => {
-	const quiz = quizes[id];
+	const quiz = quizzes[id];
 	if (typeof quiz === "undefined"){
 		throw new Error(`El valor de id no es valido,`);
 	}
-	quizes.splice(id, 1);
+	quizzes.splice(id, 1);
 	save();
 };
 
