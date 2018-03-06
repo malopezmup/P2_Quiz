@@ -68,11 +68,11 @@ exports.testCmd = (rl,id) =>{
 			rl.question(`${quiz.question}: `, answer =>{
 				if(answer.toLowerCase().trim() === quiz.answer.toLowerCase().trim()){
 					log('Su respuesta es correcta.');
-					biglog(' Correcto', 'green');
+					biglog(' Correcta', 'green');
 				}
 				else{
 					log('Su respuesta es incorrecta.');
-					biglog(' Incorrecto', 'red');
+					biglog(' Incorrecta', 'red');
 				}	
 			});
 			rl.prompt();
