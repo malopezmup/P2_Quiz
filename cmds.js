@@ -60,16 +60,18 @@ rl.prompt();
 
 exports.testCmd = (rl,id) =>{
 	if (typeof id === "undefined"){
-		errorlog(`Falta el parametro id.`);
+		errorlog(`El valor del parámetro id no es válido.`);
 		rl.prompt();
 	} else {
 		try{
 			const quiz = model.getByIndex(id);
 			rl.question(`${quiz.question}: `, answer =>{
 				if(answer.toLowerCase().trim() === quiz.answer.toLowerCase().trim()){
+					log('Su respuesta es correcta.');
 					biglog(' Correcto', 'green');
 				}
 				else{
+					log('Su respuesta es incorrecta.');
 					biglog(' Incorrecto', 'red');
 				}	
 			});
@@ -109,8 +111,9 @@ exports.playCmd = rl => {
 	const askrandom = () => {
 
 		if (pendientes.length===0){
-			log("Ha completado el quiz");
+			log("Fin");
 			log(`Ha obtenido una puntuación de: ${colorize(score, 'green')} sobre ${colorize(long, 'green')}`);
+			biglog(`${score}`, 'magenta');
 			rl.prompt();
 		}else{
 					let randi = numeroAleatorio(0,pendientes.length-1);
@@ -122,13 +125,17 @@ exports.playCmd = rl => {
 					rl.question(`${quiz.question}: `, answer =>{
 						if(answer.toLowerCase().trim() === quiz.answer.toLowerCase().trim()){
 							biglog(' Correcto', 'green');
+							log('Su respuesta es correcta.');
 							score++;
 							log(`Ha obtenido una puntuación de: ${colorize(score, 'green')} hasta ahora`);
+							biglog(`${score}`, 'magenta');
 							askrandom();
 						}else{
+							log('Su respuesta es incorrecta.');
 							biglog(' Incorrecto', 'red');
-							log("Fin del juego, más suerte la próxima");
+							log("Fin");
 							log(`Ha obtenido una puntuación de: ${colorize(score, 'green')} sobre ${colorize(long, 'green')}`);
+							biglog(`${score}`, 'magenta');
 							rl.prompt();
 							}	
 						});
